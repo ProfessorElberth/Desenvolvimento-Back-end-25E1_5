@@ -31,7 +31,7 @@ public class ClienteService {
 			throw new RuntimeException("Cliente não encontrado com o id: " + id);
 		}
 
-		cliente.id = id;
+		cliente.setId(id);
 		
 		return clienteRepository.save(cliente);
 	}
@@ -42,5 +42,9 @@ public class ClienteService {
 
 	public Cliente obterPorId(Integer id) {		
 		return clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado com o id: " + id));
+	}
+
+	public Cliente obterPorCPF(String cpf) {
+		return clienteRepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Cliente não encontrado com o CPF: " + cpf));
 	}
 }

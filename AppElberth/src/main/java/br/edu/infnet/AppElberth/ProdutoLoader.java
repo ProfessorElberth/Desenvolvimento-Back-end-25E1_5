@@ -39,20 +39,21 @@ public class ProdutoLoader implements ApplicationRunner {
 				campos = linha.split(",");
 
 				Produto produto = new Produto();
-				produto.nome = campos[0];
-				produto.tipo = campos[1];
-				produto.categoria = campos[2];
-				produto.descricao = campos[3];
-				produto.preco = Float.valueOf(campos[4]);
-				produto.estoque = Integer.valueOf(campos[5]);
+				produto.setCodigo(Integer.valueOf(campos[0]));
+				produto.setNome(campos[1]);
+				produto.setTipo(campos[2]);
+				produto.setCategoria(campos[3]);
+				produto.setDescricao(campos[4]);
+				produto.setPreco(Float.valueOf(campos[5]));
+				produto.setEstoque(Integer.valueOf(campos[6]));
 				
-				String cpf = campos[6].trim();
+				String cpf = campos[7].trim();
 				Vendedor vendedor = vendedorService.obterPorCPF(cpf);
 				
 				if(vendedor == null) {
 					System.err.println("Vendedor não encontrado com o CPF " + cpf);
 				} else {
-					produto.vendedor = vendedor;
+					produto.setVendedor(vendedor);
 					produtoService.incluir(produto);
 				}
 

@@ -35,9 +35,10 @@ public class ClienteLoader implements ApplicationRunner {
 				campos = linha.split(",");
 				
 				Cliente cliente = new Cliente();
-				cliente.nome = campos[0];
-				cliente.email = campos[1];
-				cliente.telefone = campos[2];
+				cliente.setNome(campos[0]);
+				cliente.setEmail(campos[1]);
+				cliente.setTelefone(campos[2]);
+				cliente.setCpf(campos[3]);
 
 				clienteService.incluir(cliente);
 				

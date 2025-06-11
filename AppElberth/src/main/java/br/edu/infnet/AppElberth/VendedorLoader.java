@@ -35,10 +35,10 @@ public class VendedorLoader implements ApplicationRunner {
 				campos = linha.split(",");
 				
 				Vendedor vendedor = new Vendedor();
-				vendedor.nome = campos[0];
-				vendedor.email = campos[1];
-				vendedor.telefone = campos[2];
-				vendedor.cpf = campos[3];
+				vendedor.setNome(campos[0]);
+				vendedor.setEmail(campos[1]);
+				vendedor.setTelefone(campos[2]);
+				vendedor.setCpf(campos[3]);
 				
 				vendedorService.incluir(vendedor);
 

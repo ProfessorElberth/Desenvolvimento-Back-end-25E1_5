@@ -35,12 +35,16 @@ public class ProdutoService {
 			throw new RuntimeException("Produto não encontrado com o id: " + id);
 		}
 
-		produto.id = id;
+		produto.setId(id);
 		
 		return produtoRepository.save(produto);
 	}
 
 	public Produto obterPorId(Integer id) {		
 		return produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado com o id: " + id));
+	}
+
+	public Produto obterPorCodigo(int codigo) {
+		return produtoRepository.findByCodigo(codigo).orElseThrow(() -> new RuntimeException("Produto não encontrado com o código: " + codigo));
 	}
 }

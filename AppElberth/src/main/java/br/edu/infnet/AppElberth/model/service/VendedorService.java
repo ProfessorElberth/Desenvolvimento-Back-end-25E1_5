@@ -35,7 +35,7 @@ public class VendedorService {
 			throw new RuntimeException("Vendedor não encontrado com o id: " + id);
 		}
 
-		vendedor.id = id;
+		vendedor.setId(id);
 		
 		return vendedorRepository.save(vendedor);
 	}

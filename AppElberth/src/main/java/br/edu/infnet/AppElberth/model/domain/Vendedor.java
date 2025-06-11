@@ -15,18 +15,67 @@ public class Vendedor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer id;
+	private Integer id;
 	
-	public String cpf;
-	public String nome;
-	public String email;
-	public String telefone;
+	private String cpf;
+	private String nome;
+	private String email;
+	private String telefone;
 	
 	@OneToMany(mappedBy = "vendedor")
-	public List<Produto> produtos;
+	private List<Produto> produtos;
 	
 	@Override
 	public String toString() {
-		return "O vendedor " + nome + " - " + email + " e " + telefone + " - foi incluído com sucesso!";
+		return String.format("O vendedor %s - %s - %s e %s - foi incluído com sucesso!",
+				cpf, nome, email, telefone);
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 }

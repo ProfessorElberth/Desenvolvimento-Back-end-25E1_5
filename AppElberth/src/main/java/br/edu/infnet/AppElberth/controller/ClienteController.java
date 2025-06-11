@@ -1,6 +1,8 @@
 package br.edu.infnet.AppElberth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,27 +23,40 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@GetMapping("/lista")
-	public Iterable<Cliente> obterLista(){
-		return clienteService.obterLista();
+	public ResponseEntity<Iterable<Cliente>> obterLista(){
+		
+		Iterable<Cliente> lista = clienteService.obterLista();
+		
+		return ResponseEntity.ok(lista);
 	}
 	
 	@GetMapping("/{id}")
-	public Cliente obterPorId(@PathVariable Integer id) {
-		return clienteService.obterPorId(id);
+	public ResponseEntity<Cliente> obterPorId(@PathVariable Integer id) {
+		
+		Cliente cliente = clienteService.obterPorId(id);
+		
+		return ResponseEntity.ok(cliente);
 	}
 	
 	@PostMapping("/incluir")
-	public Cliente incluir(@RequestBody Cliente cliente) {
-		return clienteService.incluir(cliente);
+	public ResponseEntity<Cliente> incluir(@RequestBody Cliente cliente) {
+		
+		Cliente newCliente = clienteService.incluir(cliente);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(newCliente);
 	}
 
 	@PutMapping("/{id}")
-	public Cliente alterar(@PathVariable Integer id, @RequestBody Cliente cliente) {
-		return clienteService.alterar(id, cliente);
+	public ResponseEntity<Cliente> alterar(@PathVariable Integer id, @RequestBody Cliente cliente) {
+		
+		Cliente newCliente = clienteService.alterar(id, cliente);
+		
+		return ResponseEntity.ok(newCliente);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void excluir(@PathVariable Integer id) {
+	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
 		clienteService.excluir(id);
+		return ResponseEntity.noContent().build();
 	}
 }
