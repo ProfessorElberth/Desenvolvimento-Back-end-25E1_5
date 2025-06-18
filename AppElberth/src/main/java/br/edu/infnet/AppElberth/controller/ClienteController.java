@@ -1,5 +1,9 @@
 package br.edu.infnet.AppElberth.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.AppElberth.model.domain.Cliente;
+import br.edu.infnet.AppElberth.model.dto.ClienteDTO;
 import br.edu.infnet.AppElberth.model.service.ClienteService;
 
 @RestController
@@ -23,35 +28,41 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@GetMapping("/lista")
-	public ResponseEntity<Iterable<Cliente>> obterLista(){
+	public ResponseEntity<Iterable<ClienteDTO>> obterLista(){
 		
 		Iterable<Cliente> lista = clienteService.obterLista();
 		
-		return ResponseEntity.ok(lista);
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		
+		lista.forEach(clientes::add);
+		
+		List<ClienteDTO> listaClientesDTO = clientes.stream().map(ClienteDTO::new).collect(Collectors.toList());
+				
+		return ResponseEntity.ok(listaClientesDTO);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> obterPorId(@PathVariable Integer id) {
+	public ResponseEntity<ClienteDTO> obterPorId(@PathVariable Integer id) {
 		
 		Cliente cliente = clienteService.obterPorId(id);
-		
-		return ResponseEntity.ok(cliente);
+
+		return ResponseEntity.ok(new ClienteDTO(cliente));
 	}
 	
 	@PostMapping("/incluir")
-	public ResponseEntity<Cliente> incluir(@RequestBody Cliente cliente) {
+	public ResponseEntity<ClienteDTO> incluir(@RequestBody Cliente cliente) {
 		
 		Cliente newCliente = clienteService.incluir(cliente);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(newCliente);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new ClienteDTO(newCliente));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> alterar(@PathVariable Integer id, @RequestBody Cliente cliente) {
+	public ResponseEntity<ClienteDTO> alterar(@PathVariable Integer id, @RequestBody Cliente cliente) {
 		
 		Cliente newCliente = clienteService.alterar(id, cliente);
 		
-		return ResponseEntity.ok(newCliente);
+		return ResponseEntity.ok(new ClienteDTO(newCliente));
 	}
 	
 	@DeleteMapping("/{id}")
